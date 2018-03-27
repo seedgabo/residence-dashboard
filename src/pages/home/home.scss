@@ -1,0 +1,13 @@
+page-home {
+  .empty {
+    text-align: center;
+    img {
+      margin: 0 auto;
+      height: 300px;
+      filter: grayscale(100%);
+    }
+  }
+  .site-item {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+  }
+}

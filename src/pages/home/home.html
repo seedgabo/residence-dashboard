@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img src="assets/logo-completo.png" style="height:40px">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="api.sites.length > 0">
+    <ion-grid>
+      <ion-row responsive-sm>
+        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12 no-padding>
+          <ion-card>
+            <ion-list wrap>
+              <button ion-item (click)="selectSite(site)" class="site-item" *ngFor="let site of api.sites">
+                <ion-thumbnail item-left>
+                  <img [src]="site.url + 'img/icon.png'">
+                </ion-thumbnail>
+                <h2 color="dark" ion-text>
+                  {{site.site}}
+                </h2>
+                <ion-note>
+                  {{site.url}}
+                </ion-note>
+                <button ion-button item-right clear *ngIf="!site.token" color="primary" (click)="login(site)" icon-right>
+                  {{ api.trans('__.sign in') }}
+                  <ion-icon name="log-in"></ion-icon>
+                </button>
+              </button>
+            </ion-list>
+          </ion-card>
+        </ion-col>
+        <ion-col col-9 col-sm no-padding>
+          <ion-row>
+            <ion-col col-sm-6 col-md-4 col-lg-4 col-xl-4 no-padding>
+              <ion-card color="danger">
+                <ion-card-header text-center>
+                  <h1>{{api.trans('literals.debt')}}</h1>
+                  <hr>
+                </ion-card-header>
+                <ion-card-content text-center>
+                  <h1>{{ stats.debt | currency:'USD':'symbol':'1.2-2'}}</h1>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 no-padding>
+              <ion-card>
+                <ion-card-content>
+                  <canvas id="myChart"></canvas>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div *ngIf="api.sites.length == 0" class="empty">
+    <img src="assets/logo-happy.png" alt="">
+    <h3 ion-text>No hay ningun sitio agregado</h3>
+  </div>
+</ion-content>

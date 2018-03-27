@@ -1,0 +1,40 @@
+<ion-content padding class="container">
+  <ion-card *ngIf="!select" padding>
+    <div text-left *ngIf="!select">
+      <img src="./assets/logo-completo.png" style="height:80px; width:auto;" *ngIf="!api.url">
+      <img [src]="api.url + 'img/logo.png'" style="height:80px; width:auto;" *ngIf="api.url">
+    </div>
+
+    <div *ngIf="!api.url">
+      <div>
+        <ion-item>
+          <ion-label floating>
+            <ion-icon name="person" item-left></ion-icon>
+            Email
+          </ion-label>
+          <ion-input type="email" [(ngModel)]="api.username"></ion-input>
+        </ion-item>
+        <button color="primary" (click)="login()" ion-button class="pull-right">{{'__.siguiente' | trans }}</button>
+
+        <ion-grid>
+          <ion-row responsive-sm>
+            <ion-col>
+              <button hideWhen="android,ios" class="facebook-button" full ion-button icon-left (click)="loginWithFacebook()">
+                <ion-icon item-left name="logo-facebook"></ion-icon>
+                {{api.trans('literals.login_with_Facebook')}}
+              </button>
+            </ion-col>
+            <ion-col>
+              <button hideWhen="android,ios" class="google-button" full ion-button icon-left (click)="loginWithGoogle()">
+                <ion-icon item-left name="logo-googleplus"></ion-icon>
+                {{api.trans('literals.login_with_Google')}}
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </div>
+    </div>
+
+  </ion-card>
+</ion-content>

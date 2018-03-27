@@ -1,0 +1,66 @@
+page-login {
+  ion-content {
+    // background-image: url(https://www.androidcentral.com/sites/androidcentral.com/files/styles/larger/public/article_images/2016/06/midngiht-city-material-wall.jpg?itok=s_cbP4x7);
+    background-image: url(../assets/background.jpg);
+    background-size: cover;
+  }
+  ion-item {
+    background-color: transparent !important;
+  }
+  .login-button {
+    margin-top: 10px;
+  }
+  .facebook-button {
+    margin-top: 10px;
+    background-color: #3b5998 !important;
+    color: white;
+    &:hover,
+    &:active {
+      background-color: #3b5998 !important;
+      color: white;
+    }
+  }
+  .google-button {
+    margin-top: 10px;
+    background-color: #d62d20 !important;
+    color: white;
+    &:hover,
+    &:active {
+      background-color: #d62d20 !important;
+      color: white;
+    }
+    // color: white;
+  }
+  input.code {
+    width: 100%;
+    display: block;
+    margin: 2em auto;
+    padding: 0.5em 0.25em;
+    border: none;
+    border-radius: 0.2em;
+    font-size: 1.5em;
+    text-align: center;
+    box-shadow: 0 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes flash {
+  from {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.loading-content {
+  img {
+    animation-name: flash;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+  }
+}
