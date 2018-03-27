@@ -5,6 +5,7 @@ import { Api } from "../../providers/api";
 
 import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from "angular5-social-login";
 import { Component } from "@angular/core";
+import { HomePage } from "../home/home";
 
 declare var window: any;
 @IonicPage()
@@ -184,6 +185,10 @@ export class Login {
             return;
           }
           loading.dismiss();
+          this.api.sites = data;
+          this.api.storage.set("username", this.api.username);
+          this.api.storage.set("sites", this.api.sites);
+          this.goTo();
         },
         err => {
           console.error(err);
@@ -204,6 +209,6 @@ export class Login {
 
   goTo() {
     this.events.publish("login", {});
-    this.navCtrl.setRoot("HomePage");
+    this.navCtrl.setRoot(HomePage);
   }
 }

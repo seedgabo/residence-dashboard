@@ -9,7 +9,7 @@ import * as Chart from "chart.js";
 })
 export class HomePage {
   selected;
-  stats;
+  stats: any = {};
   backgroundColor = ["#2196F3", "#32db64", "#f53d3d", "#ffff00", "#f53d3d", "rgb(248, 62, 130)"];
   constructor(public navCtrl: NavController, public api: Api) {}
 
@@ -25,7 +25,7 @@ export class HomePage {
     var find = false;
     this.api.sites.forEach(site => {
       if (!find && site.token) {
-        this.getStatistics(site);
+        this.selectSite(site);
         find = true;
       }
     });
@@ -47,26 +47,29 @@ export class HomePage {
           stats.defaulters++;
         }
       });
-      this.setGraphs(stats);
+      this.setGraphDefaulters(stats);
     });
 
     this.api.get(site, "invoices?scope[Indebt]=").then((data: any) => {
       stats.debts = {};
+      stats.invoices = data;
       data.forEach(inv => {
-        if (!stats.debts[moment(inv.date).format("YYYY-MM-DD")]) stats.debts[moment(inv.date).format("YYYY-MM-DD")] = 0;
-        stats.debts[moment(inv.date).format("YYYY-MM-DD")] += Number(inv.total);
+        if (!stats.debts[moment(inv.date).format("MMM YYYY")]) stats.debts[moment(inv.date).format("MMM YYYY")] = 0;
+        stats.debts[moment(inv.date).format("MMM YYYY")] += Number(inv.total);
       });
-      console.log(stats.debts);
-      debugger;
+      this.setGraphDebts(stats);
     });
   }
 
   selectSite(site) {
+    if (!site.token) {
+      return this.login(site);
+    }
     this.selected = site;
     this.getStatistics(site);
   }
 
-  setGraphs(stats) {
+  setGraphDefaulters(stats) {
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
       type: "pie",
@@ -81,21 +84,39 @@ export class HomePage {
       },
       options: { responsive: true }
     });
-
-    // var ctx2 = document.getElementById("myChart2");
-    // var myChart2 = new Chart(ctx, {
-    //   type: "pie",
-    //   data: {
-    //     datasets: [
-    //       {
-    //         data: [stats.defaulters, stats.solvents],
-    //         backgroundColor: ["#f53d3d", "#32db64"]
-    //       }
-    //     ],
-    //     labels: [this.api.trans("literals.defaulters"), this.api.trans("literals.solvents")]
-    //   },
-    //   options: { responsive: true }
-    // });
+  }
+  setGraphDebts(stats) {
+    var values = [];
+    var sums = [];
+    var sum = 0;
+    Object.keys(stats.debts).forEach(key => {
+      values.push(Number(stats.debts[key]));
+      sums.push((sum += Number(stats.debts[key])));
+    });
+    var ctx2 = document.getElementById("myChart2");
+    var myChart2 = new Chart(ctx2, {
+      type: "line",
+      data: {
+        labels: Object.keys(stats.debts),
+        datasets: [
+          {
+            label: this.api.trans("literals.debts"),
+            data: values,
+            backgroundColor: this.backgroundColor[0],
+            borderColor: this.backgroundColor[0],
+            fill: false
+          },
+          {
+            label: this.api.trans("literals.acumulado"),
+            data: sums,
+            backgroundColor: this.backgroundColor[1],
+            borderColor: this.backgroundColor[1],
+            fill: false
+          }
+        ]
+      },
+      options: { responsive: true }
+    });
   }
 
   login(site) {

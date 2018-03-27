@@ -13,51 +13,67 @@
   <div *ngIf="api.sites.length > 0">
     <ion-grid>
       <ion-row responsive-sm>
-        <ion-col col-xl-3 col-lg-3 col-md-4 col-sm-12 col-xs-12 no-padding>
-          <ion-card>
-            <ion-list wrap>
-              <button ion-item (click)="selectSite(site)" class="site-item" *ngFor="let site of api.sites">
-                <ion-thumbnail item-left>
+        <ion-col col-xl-2 col-lg-2 col-md-4 col-sm-12 col-xs-12 no-padding>
+          <ion-card style="min-height:80vh">
+            <ion-list>
+              <button ion-item [ngClass]="{'selected': selected == site }" (click)="selectSite(site)" class="site-item" *ngFor="let site of api.sites">
+                <ion-avatar item-left>
                   <img [src]="site.url + 'img/icon.png'">
-                </ion-thumbnail>
+                </ion-avatar>
                 <h2 color="dark" ion-text>
                   {{site.site}}
                 </h2>
                 <ion-note>
                   {{site.url}}
                 </ion-note>
-                <button ion-button item-right clear *ngIf="!site.token" color="primary" (click)="login(site)" icon-right>
-                  {{ api.trans('__.sign in') }}
-                  <ion-icon name="log-in"></ion-icon>
-                </button>
               </button>
             </ion-list>
           </ion-card>
         </ion-col>
-        <ion-col col-9 col-sm no-padding>
+
+
+        <ion-col col-xl-10 col-lg-10 col-md-8 col-sm-12 col-xs-12 no-padding>
           <ion-row>
-            <ion-col col-sm-6 col-md-4 col-lg-4 col-xl-4 no-padding>
-              <ion-card color="danger">
+            <ion-col col-sm-6 col-md-3 col-lg-3 col-xl-3 no-padding>
+              <ion-card color="primary">
                 <ion-card-header text-center>
-                  <h1>{{api.trans('literals.debt')}}</h1>
+                  <h1>
+                    <ion-icon name="card"></ion-icon>
+                    {{api.trans('literals.debt')}}
+                  </h1>
                   <hr>
                 </ion-card-header>
                 <ion-card-content text-center>
-                  <h1>{{ stats.debt | currency:'USD':'symbol':'1.2-2'}}</h1>
+                  <h1 *ngIf="stats.debt">{{ stats.debt | currency:'USD':'symbol':'1.2-2'}}</h1>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col col-sm-6 col-md-3 col-lg-3 col-xl-3 no-padding>
+              <ion-card color="secondary">
+                <ion-card-header text-center>
+                  <h1>
+                    <ion-icon name="document"></ion-icon>
+                    {{api.trans('literals.invoices')}}
+                  </h1>
+                  <hr>
+                </ion-card-header>
+                <ion-card-content text-center>
+                  <h1 *ngIf="stats.invoices">{{ stats.invoices.length}}</h1>
                 </ion-card-content>
               </ion-card>
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 no-padding>
-              <ion-card>
-                <ion-card-content>
-                  <canvas id="myChart"></canvas>
-                </ion-card-content>
-              </ion-card>
+            <ion-col col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding>
+              <canvas id="myChart"></canvas>
+            </ion-col>
+            <ion-col col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding>
+              <canvas id="myChart2"></canvas>
             </ion-col>
           </ion-row>
         </ion-col>
+
+
       </ion-row>
     </ion-grid>
   </div>
