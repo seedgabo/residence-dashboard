@@ -7,7 +7,7 @@
     </ion-header>
     <ion-content>
       <ion-list>
-        <button ion-item [ngClass]="{'selected': api.selected == site }" (click)="selectSite(site)" class="site-item" *ngFor="let site of api.sites">
+        <button menuClose ion-item [ngClass]="{'selected': api.selected == site }" (click)="selectSite(site)" class="site-item" *ngFor="let site of api.sites">
           <ion-avatar item-left>
             <img [src]="site.url + 'img/icon.png'">
           </ion-avatar>
