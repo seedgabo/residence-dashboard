@@ -11,8 +11,19 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class HomePage {
   stats: any = {};
-  backgroundColor = ["#2196F3", "#32db64", "#f53d3d", "#ffff00", "#f53d3d", "rgb(248, 62, 130)"];
-  constructor(public navCtrl: NavController, public api: Api, public sanitizer: DomSanitizer) {}
+  backgroundColor = [
+    "#2196F3",
+    "#32db64",
+    "#f53d3d",
+    "#ffff00",
+    "#f53d3d",
+    "rgb(248, 62, 130)"
+  ];
+  constructor(
+    public navCtrl: NavController,
+    public api: Api,
+    public sanitizer: DomSanitizer
+  ) {}
 
   ionViewDidLoad() {
     this.api.ready.then(() => {
@@ -30,6 +41,7 @@ export class HomePage {
         find = true;
       }
     });
+    if (this.api.sites.length > 0) this.selectSite(this.api.sites[0]);
   }
 
   getStatistics(site) {
@@ -55,7 +67,8 @@ export class HomePage {
       stats.debts = {};
       stats.invoices = data;
       data.forEach(inv => {
-        if (!stats.debts[moment(inv.date).format("MMM YYYY")]) stats.debts[moment(inv.date).format("MMM YYYY")] = 0;
+        if (!stats.debts[moment(inv.date).format("MMM YYYY")])
+          stats.debts[moment(inv.date).format("MMM YYYY")] = 0;
         stats.debts[moment(inv.date).format("MMM YYYY")] += Number(inv.total);
       });
       this.setGraphDebts(stats);
@@ -67,7 +80,9 @@ export class HomePage {
     //   return this.login(site);
     // }
     this.api.selected = site;
-    site._url = this.sanitizer.bypassSecurityTrustResourceUrl(site.url + "impersonate/" + site.user_id);
+    site._url = this.sanitizer.bypassSecurityTrustResourceUrl(
+      site.url + "impersonate/" + site.user_id
+    );
     // this.getStatistics(site);
   }
 
@@ -82,7 +97,10 @@ export class HomePage {
             backgroundColor: ["#f53d3d", "#32db64"]
           }
         ],
-        labels: [this.api.trans("literals.defaulters"), this.api.trans("literals.solvents")]
+        labels: [
+          this.api.trans("literals.defaulters"),
+          this.api.trans("literals.solvents")
+        ]
       },
       options: { responsive: true }
     });

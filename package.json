@@ -30,6 +30,7 @@
     "angular2-moment": "^1.8.0",
     "angular5-social-login": "^1.0.9",
     "chart.js": "^2.7.2",
+    "cordova-android": "6.3.0",
     "cordova-browser": "5.0.3",
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
@@ -58,7 +59,8 @@
       "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }
