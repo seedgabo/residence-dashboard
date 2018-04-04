@@ -1,0 +1,5 @@
+#!/bin/bash
+cd ./platforms/browser/www
+rsync -avz --delete . "gabriel@residentesonline.com:htdocs/dashboard"
+echo "syncronized"
+cd ../../../
