@@ -13,6 +13,15 @@
         </ion-label>
         <ion-input type="email" [(ngModel)]="api.username"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="key" item-left></ion-icon>
+          Password
+        </ion-label>
+        <ion-input type="password" [(ngModel)]="api.password"></ion-input>
+      </ion-item>
+
       <button color="primary" (click)="login()" ion-button class="pull-right">{{'__.siguiente' | trans }}</button>
 
       <!--       

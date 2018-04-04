@@ -3,8 +3,6 @@ import { Nav, Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
-import { HomePage } from "../pages/home/home";
-import { ListPage } from "../pages/list/list";
 import { Api } from "../providers/api";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -14,20 +12,25 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = "HomePage";
 
   pages: Array<{ title: string; component: any }>;
 
-  constructor(public api: Api, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public sanitizer: DomSanitizer) {
+  constructor(
+    public api: Api,
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public sanitizer: DomSanitizer
+  ) {
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [{ title: "Home", component: HomePage }, { title: "List", component: ListPage }];
   }
 
   selectSite(site) {
     this.api.selected = site;
-    site._url = this.sanitizer.bypassSecurityTrustResourceUrl(site.url + "impersonate/" + site.user_id);
+    site._url = this.sanitizer.bypassSecurityTrustResourceUrl(
+      site.url + "impersonate/" + site.user_id
+    );
   }
 
   initializeApp() {
@@ -38,7 +41,7 @@ export class MyApp {
       this.splashScreen.hide();
       this.api.ready.then(sites => {
         if (this.api.sites.length == 0) this.rootPage = "Login";
-        else this.rootPage = HomePage;
+        else this.rootPage = "HomePage";
       });
     });
   }
@@ -47,5 +50,11 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  logout() {
+    this.api.sites = [];
+    this.api.storage.clear();
+    this.nav.setRoot("Login");
   }
 }

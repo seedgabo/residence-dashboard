@@ -1,23 +1,59 @@
-import { trigger, style, transition, animate, query, stagger } from "@angular/animations";
+import {
+  trigger,
+  style,
+  transition,
+  animate,
+  query,
+  stagger
+} from "@angular/animations";
 
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, Events, Platform } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController,
+  LoadingController,
+  Events,
+  Platform
+} from "ionic-angular";
 import { Api } from "../../providers/api";
 
-import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from "angular5-social-login";
+import {
+  AuthService,
+  FacebookLoginProvider,
+  GoogleLoginProvider
+} from "angular5-social-login";
 import { Component } from "@angular/core";
-import { HomePage } from "../home/home";
 
 declare var window: any;
-@IonicPage()
+@IonicPage({
+  priority: "high"
+})
 @Component({
   selector: "page-login",
   templateUrl: "login.html",
   animations: [
     trigger("item", [
-      transition(":enter", [query(":self", stagger(120, [style({ opacity: 0, transform: "translateX(-200px)" }), animate("800ms ease-in-out")]))])
+      transition(":enter", [
+        query(
+          ":self",
+          stagger(120, [
+            style({ opacity: 0, transform: "translateX(-200px)" }),
+            animate("800ms ease-in-out")
+          ])
+        )
+      ])
     ]),
     trigger("list", [
-      transition(":enter", [query(".item", stagger(120, [style({ opacity: 0, transform: "translateX(-200px)" }), animate("800ms ease-in-out")]))])
+      transition(":enter", [
+        query(
+          ".item",
+          stagger(120, [
+            style({ opacity: 0, transform: "translateX(-200px)" }),
+            animate("800ms ease-in-out")
+          ])
+        )
+      ])
     ])
   ]
 })
@@ -146,7 +182,8 @@ export class Login {
       .catch(() => {
         let alert = this.alertCtrl.create({
           title: "Error",
-          subTitle: "No hemos podido validar el usuario asegurese de escribirlo correctamente",
+          subTitle:
+            "No hemos podido validar el usuario asegurese de escribirlo correctamente",
           buttons: ["OK"]
         });
         alert.present();
@@ -169,7 +206,10 @@ export class Login {
     }
 
     this.api.http
-      .get("http://residenciasonline.com/residencias/public/api/smart-login?email=" + this.api.username)
+      .get(
+        "http://residenciasonline.com/residencias/public/api/smart-login?email=" +
+          this.api.username
+      )
       .map(res => res.json())
       .subscribe(
         (data: any) => {
@@ -184,11 +224,20 @@ export class Login {
             });
             return;
           }
-          loading.dismiss();
-          this.api.sites = data;
-          this.api.storage.set("username", this.api.username);
-          this.api.storage.set("sites", this.api.sites);
-          this.goTo();
+          this.api
+            .doLogin(data[0])
+            .then(() => {
+              loading.dismiss();
+              this.api.sites = data;
+              this.api.storage.set("username", this.api.username);
+              this.api.storage.set("sites", this.api.sites);
+              this.goTo();
+            })
+            .catch(err => {
+              console.error(err);
+              this.api.Error(err);
+              loading.dismiss();
+            });
         },
         err => {
           console.error(err);
@@ -209,6 +258,6 @@ export class Login {
 
   goTo() {
     this.events.publish("login", {});
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.setRoot("HomePage");
   }
 }

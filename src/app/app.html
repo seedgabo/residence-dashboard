@@ -18,6 +18,11 @@
             {{site.url}}
           </ion-note>
         </button>
+
+        <button menuClose ion-item *ngIf="api.sites.length > 0" (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+          Cerrar Sesion
+        </button>
       </ion-list>
     </ion-content>
 

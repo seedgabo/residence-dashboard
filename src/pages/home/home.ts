@@ -1,10 +1,12 @@
 import * as moment from "moment";
 import { Component } from "@angular/core";
-import { NavController } from "ionic-angular";
+import { NavController, IonicPage } from "ionic-angular";
 import { Api } from "../../providers/api";
 import * as Chart from "chart.js";
 import { DomSanitizer } from "@angular/platform-browser";
-
+@IonicPage({
+  priority: "high"
+})
 @Component({
   selector: "page-home",
   templateUrl: "home.html"
