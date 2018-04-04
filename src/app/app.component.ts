@@ -6,6 +6,7 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { HomePage } from "../pages/home/home";
 import { ListPage } from "../pages/list/list";
 import { Api } from "../providers/api";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   templateUrl: "app.html"
@@ -17,11 +18,16 @@ export class MyApp {
 
   pages: Array<{ title: string; component: any }>;
 
-  constructor(public api: Api, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public api: Api, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public sanitizer: DomSanitizer) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [{ title: "Home", component: HomePage }, { title: "List", component: ListPage }];
+  }
+
+  selectSite(site) {
+    this.api.selected = site;
+    site._url = this.sanitizer.bypassSecurityTrustResourceUrl(site.url + "impersonate/" + site.user_id);
   }
 
   initializeApp() {

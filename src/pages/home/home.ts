@@ -10,7 +10,6 @@ import { DomSanitizer } from "@angular/platform-browser";
   templateUrl: "home.html"
 })
 export class HomePage {
-  selected;
   stats: any = {};
   backgroundColor = ["#2196F3", "#32db64", "#f53d3d", "#ffff00", "#f53d3d", "rgb(248, 62, 130)"];
   constructor(public navCtrl: NavController, public api: Api, public sanitizer: DomSanitizer) {}
@@ -67,7 +66,7 @@ export class HomePage {
     // if (!site.token) {
     //   return this.login(site);
     // }
-    this.selected = site;
+    this.api.selected = site;
     site._url = this.sanitizer.bypassSecurityTrustResourceUrl(site.url + "impersonate/" + site.user_id);
     // this.getStatistics(site);
   }

@@ -1,8 +1,8 @@
 <ion-header>
   <ion-navbar color="primary">
-    <!-- <button ion-button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button> -->
+    </button>
     <ion-title>
       <img src="assets/logo-completo.png" style="height:40px">
     </ion-title>
@@ -12,26 +12,10 @@
 <ion-content no-padding>
   <div *ngIf="api.sites.length > 0">
     <ion-grid>
-      <ion-row responsive-sm>
-        <ion-col col-xl-2 col-lg-2 col-md-4 col-sm-12 col-xs-12 no-padding>
-          <div style="min-height: calc(100vh - 70px)" no-margin>
-            <ion-list>
-              <button ion-item [ngClass]="{'selected': selected == site }" (click)="selectSite(site)" class="site-item" *ngFor="let site of api.sites">
-                <ion-avatar item-left>
-                  <img [src]="site.url + 'img/icon.png'">
-                </ion-avatar>
-                <h2 color="dark" ion-text>
-                  {{site.site}}
-                </h2>
-                <ion-note>
-                  {{site.url}}
-                </ion-note>
-              </button>
-            </ion-list>
-          </div>
+      <ion-row>
+        <ion-col col-12 no-padding *ngIf="api.selected">
+          <iframe [src]="api.selected._url" frameborder="0" style="width: 100%; height: calc(100vh - 70px)"></iframe>
         </ion-col>
-
-
         <!-- <ion-col col-xl-10 col-lg-10 col-md-8 col-sm-12 col-xs-12 no-padding>
           <ion-row>
             <ion-col col-sm-6 col-md-3 col-lg-3 col-xl-3 no-padding>
@@ -72,11 +56,6 @@
             </ion-col>
           </ion-row>
         </ion-col> -->
-
-
-        <ion-col col-xl-10 col-lg-10 col-md-8 col-sm-12 col-xs-12 no-padding *ngIf="selected">
-          <iframe [src]="selected._url" frameborder="0" style="width: 100%; height: calc(100vh - 70px)"></iframe>
-        </ion-col>
       </ion-row>
     </ion-grid>
   </div>

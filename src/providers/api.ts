@@ -24,6 +24,7 @@ export class Api {
   });
   langs: any = langs;
   objects: any = {};
+  selected;
   constructor(
     public http: Http,
     public storage: Storage,
