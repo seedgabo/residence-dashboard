@@ -3,6 +3,8 @@ import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { Api } from "../../providers/api";
 import * as Chart from "chart.js";
+import { DomSanitizer } from "@angular/platform-browser";
+
 @Component({
   selector: "page-home",
   templateUrl: "home.html"
@@ -11,7 +13,7 @@ export class HomePage {
   selected;
   stats: any = {};
   backgroundColor = ["#2196F3", "#32db64", "#f53d3d", "#ffff00", "#f53d3d", "rgb(248, 62, 130)"];
-  constructor(public navCtrl: NavController, public api: Api) {}
+  constructor(public navCtrl: NavController, public api: Api, public sanitizer: DomSanitizer) {}
 
   ionViewDidLoad() {
     this.api.ready.then(() => {
@@ -62,11 +64,12 @@ export class HomePage {
   }
 
   selectSite(site) {
-    if (!site.token) {
-      return this.login(site);
-    }
+    // if (!site.token) {
+    //   return this.login(site);
+    // }
     this.selected = site;
-    this.getStatistics(site);
+    site._url = this.sanitizer.bypassSecurityTrustResourceUrl(site.url + "impersonate/" + site.user_id);
+    // this.getStatistics(site);
   }
 
   setGraphDefaulters(stats) {

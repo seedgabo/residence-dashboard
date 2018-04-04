@@ -31,7 +31,8 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.api.ready.then(sites => {
-        if (this.api.username == "") this.rootPage = "Login";
+        if (this.api.sites.length == 0) this.rootPage = "Login";
+        else this.rootPage = HomePage;
       });
     });
   }
