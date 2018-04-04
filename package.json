@@ -10,7 +10,7 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "release-web": "ionic cordova run browser --prod"
+    "release-web": "ionic cordova build browser --prod"
   },
   "dependencies": {
     "@angular/animations": "5.2.9",
@@ -33,7 +33,7 @@
     "cordova-browser": "5.0.3",
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
-    "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-ionic-webview": "^1.1.19",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "ionic-angular": "3.9.2",
@@ -56,6 +56,7 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {}
-    }
+    },
+    "platforms": ["browser"]
   }
 }
