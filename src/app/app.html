@@ -1,5 +1,6 @@
 <ion-split-pane>
-  <ion-menu [content]="content">
+  <ion-menu [content]="content" *ngIf="this.api.sites && this.api.sites.length > 0">
+
     <ion-header>
       <ion-toolbar color="dark">
         <ion-title>Menu</ion-title>
